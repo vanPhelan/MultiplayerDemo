@@ -16,6 +16,9 @@ public:
 	AProjectile();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	class USphereComponent* Collider;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UStaticMeshComponent* Mesh;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
@@ -28,5 +31,4 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
 };

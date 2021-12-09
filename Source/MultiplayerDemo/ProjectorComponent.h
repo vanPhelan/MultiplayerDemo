@@ -28,5 +28,8 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UFUNCTION(BlueprintCallable)
-	AProjectile* FireProjectile();
+	void Fire();
+
+	UFUNCTION(Server, Reliable)
+	void SpawnProjectile();
 };

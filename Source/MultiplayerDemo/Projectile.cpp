@@ -3,6 +3,8 @@
 
 #include "Projectile.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "Components/SphereComponent.h"
+#include "GameFramework/Character.h"
 
 // Sets default values
 AProjectile::AProjectile()
@@ -10,19 +12,19 @@ AProjectile::AProjectile()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
-	RootComponent = Mesh;
+	SetReplicates(true);
 
-	Mesh->SetSimulatePhysics(true);
-	Mesh->CanCharacterStepUpOn = ECanBeCharacterBase::ECB_No;
-	//Mesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
-	//Mesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
-	Mesh->SetCollisionProfileName(TEXT("OverlapAll"));
+	Collider = CreateDefaultSubobject<USphereComponent>(TEXT("Collider"));
+	RootComponent = Collider;
+
+	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
+	Mesh->SetCollisionProfileName(TEXT("NoCollision"));
+	Mesh->SetupAttachment(RootComponent);
 
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement"));
-
-	ProjectileMovement->InitialSpeed = 1000.0f;
-	ProjectileMovement->MaxSpeed = 1000.0f;
+	ProjectileMovement->InitialSpeed = 2000.0f;
+	ProjectileMovement->MaxSpeed = 2000.0f;
+	ProjectileMovement->ProjectileGravityScale = 0.2f;
 }
 
 // Called when the game starts or when spawned
